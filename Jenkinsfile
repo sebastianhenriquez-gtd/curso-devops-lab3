@@ -47,7 +47,7 @@ pipeline {
                               -Dsonar.tests=src \
                               -Dsonar.test.inclusions=**/*.spec.ts \
                               -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
-                              -Dsonar.nodejs.executable=$(which node)
+                              -Dsonar.nodejs.executable=\$(which node)
                         """
                     }
                 }
