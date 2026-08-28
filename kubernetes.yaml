@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: shenriquez
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: curso-devops-lab3-config
+  namespace: shenriquez
+data:
+  USER_KEY: "usuario-demo-lab3"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: curso-devops-lab3-secret
+  namespace: shenriquez
+type: Opaque
+stringData:
+  DB_PASSWORD: "changeme-super-secret"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: curso-devops-lab3
+  namespace: shenriquez
+  labels:
+    app: curso-devops-lab3
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: curso-devops-lab3
+  template:
+    metadata:
+      labels:
+        app: curso-devops-lab3
+    spec:
+      containers:
+        - name: curso-devops-lab3
+          image: ghcr.io/sebastianhenriquez-gtd/curso-devops-lab3:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+            - name: USER_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: curso-devops-lab3-config
+                  key: USER_KEY
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: curso-devops-lab3-secret
+                  key: DB_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: curso-devops-lab3-service
+  namespace: shenriquez
+spec:
+  selector:
+    app: curso-devops-lab3
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: ClusterIP
