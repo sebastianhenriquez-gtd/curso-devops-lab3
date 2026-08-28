@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDS   = 'dockerhub-creds'
         GITHUB_CREDS      = 'github-creds'
-        DOCKERHUB_IMAGE   = 'sebastianhenriquezgtd/curso-devops-lab3'
+        DOCKERHUB_IMAGE   = 'sebahenriquez/curso-devops-lab3'
         GHCR_IMAGE        = 'ghcr.io/sebastianhenriquez-gtd/curso-devops-lab3'
         K8S_NAMESPACE     = 'shenriquez'
         K8S_DEPLOYMENT    = 'curso-devops-lab3'
