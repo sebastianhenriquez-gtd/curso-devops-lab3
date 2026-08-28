@@ -33,7 +33,8 @@ pipeline {
         }
 
         // c. Envío de cobertura a SonarQube y validación de puerta de calidad
-        /* stage('SonarQube analysis') {
+        stage('SonarQube analysis') {
+            when { expression { return false } }
             steps {
                 script {
                     def scannerHome = tool 'SonarScanner'
@@ -54,7 +55,8 @@ pipeline {
             }
         }
 
-        */ /* stage('Quality Gate') {
+        stage('Quality Gate') {
+            when { expression { return false } }
             steps {
                 timeout(time: 5, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
@@ -63,7 +65,7 @@ pipeline {
         }
 
         // d. Build de la aplicación
-        */ stage('Build application') {
+        stage('Build application') {
             steps {
                 sh 'npm run build'
             }
